@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JobBot — AI Job Automation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="/frontend/style.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-icon">⚡</div>
+        <div class="logo-text">
+          <span class="logo-name">JobBot</span>
+          <span class="logo-sub">AI Automation</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a class="nav-item active" data-page="dashboard">
+          <i data-lucide="layout-dashboard"></i><span>Dashboard</span>
+        </a>
+        <a class="nav-item" data-page="jobs">
+          <i data-lucide="briefcase"></i><span>Job Finder</span>
+        </a>
+        <a class="nav-item" data-page="resumes">
+          <i data-lucide="file-text"></i><span>My Resumes</span>
+        </a>
+        <a class="nav-item" data-page="tailor">
+          <i data-lucide="wand-2"></i><span>AI Tailor</span>
+        </a>
+        <a class="nav-item" data-page="history">
+          <i data-lucide="history"></i><span>History</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="status-indicator">
+          <span class="status-dot"></span>
+          <span>System Online</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="main">
+      <div id="content" class="content"></div>
+    </main>
+  </div>
+
+  <!-- Toast container -->
+  <div id="toast-container"></div>
+
+  <!-- Modal -->
+  <div id="modal-overlay" class="modal-overlay hidden" onclick="handleModalOverlayClick(event)">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="modal-title">Detail</h3>
+        <button class="btn-icon" onclick="closeModal()"><i data-lucide="x"></i></button>
+      </div>
+      <div id="modal-body" class="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="/frontend/app.js"></script>
+</body>
+</html>

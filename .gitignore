@@ -1,0 +1,14 @@
+.env
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+dist/
+*.egg-info/
+storage/resumes/*
+storage/tailored/*
+!storage/resumes/.gitkeep
+!storage/tailored/.gitkeep
+.venv/
+venv/
