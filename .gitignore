@@ -1,0 +1,53 @@
+# ── Environment & Secrets ─────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── Google API Credentials ────────────────────────────────────────
+credentials/
+!credentials/.gitkeep
+
+# ── Resume Files (personal data) ─────────────────────────────────
+resumes/base_resume.docx
+resumes/tailored/
+
+# ── Application Output / Logs ────────────────────────────────────
+outputs/
+
+# ── Python ───────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+pip-wheel-metadata/
+.installed.cfg
+
+# ── Virtual Environments ─────────────────────────────────────────
+.venv/
+venv/
+env/
+ENV/
+.virtualenv/
+
+# ── Playwright ────────────────────────────────────────────────────
+playwright-report/
+test-results/
+
+# ── IDEs & Editors ───────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ── OS ────────────────────────────────────────────────────────────
+desktop.ini
