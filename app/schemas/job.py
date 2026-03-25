@@ -26,6 +26,7 @@ class JobResponse(JobBase):
     posted_at: datetime | None = None
     scraped_at: datetime
     is_active: bool
+    applied: bool
     created_at: datetime
     updated_at: datetime
 

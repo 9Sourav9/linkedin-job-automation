@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.models.resume import Resume
 from app.repositories.resume_repository import ResumeRepository
 from app.services.storage_service import StorageService
-from app.utils import pdf_parser
+from app.utils import docx_parser, pdf_parser
 
 logger = logging.getLogger(__name__)
 
@@ -33,11 +33,14 @@ class ResumeService:
         saved_path = await self.storage.save(file_bytes, "resumes", unique_name)
         relative = self.storage.relative_path(saved_path)
 
-        # Extract text
+        # Extract text (PDF or DOCX)
         try:
-            parsed_text = pdf_parser.extract_text(saved_path)
-        except ValueError as e:
-            logger.warning("Could not parse PDF text: %s", e)
+            if filename.lower().endswith(".docx"):
+                parsed_text = docx_parser.extract_text(saved_path)
+            else:
+                parsed_text = pdf_parser.extract_text(saved_path)
+        except Exception as e:
+            logger.warning("Could not parse resume text: %s", e)
             parsed_text = None
 
         resume = await self.repo.create(

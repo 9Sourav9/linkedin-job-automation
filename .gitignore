@@ -12,3 +12,4 @@ storage/tailored/*
 !storage/tailored/.gitkeep
 .venv/
 venv/
+logs/

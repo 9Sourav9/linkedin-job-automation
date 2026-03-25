@@ -9,6 +9,12 @@ class TailorRequest(BaseModel):
     resume_id: uuid.UUID
 
 
+class TailorApplyRequest(BaseModel):
+    accepted_sections: list[str]  # section names the user approved
+    edited_changes: list[dict] | None = None  # optional user-edited tailored text per section
+    full_text_override: str | None = None  # user manually edited the full resume text
+
+
 class TailoredResumeResponse(BaseModel):
     id: uuid.UUID
     job_id: uuid.UUID

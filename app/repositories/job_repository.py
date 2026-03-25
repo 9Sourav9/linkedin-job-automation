@@ -38,6 +38,16 @@ class JobRepository(BaseRepository[Job]):
         await self.session.flush()
         return result.rowcount
 
+    async def mark_applied(self, job_id: uuid.UUID, applied: bool) -> Job | None:
+        job = await self.get_by_id(job_id)
+        if not job:
+            return None
+        job.applied = applied
+        job.updated_at = datetime.now(timezone.utc)
+        await self.session.flush()
+        await self.session.refresh(job)
+        return job
+
     async def list_by_source(
         self, source: str, offset: int = 0, limit: int = 50
     ) -> tuple[int, list[Job]]:

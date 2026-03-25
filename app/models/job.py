@@ -29,6 +29,7 @@ class Job(Base, UUIDMixin, TimestampMixin):
     posted_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     scraped_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean, default=True, nullable=False)
+    applied: Mapped[bool] = mapped_column(Boolean, default=False, nullable=False)
     raw_html: Mapped[str | None] = mapped_column(Text)
 
     tailored_resumes: Mapped[list["TailoredResume"]] = relationship(

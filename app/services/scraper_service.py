@@ -40,8 +40,23 @@ class ScraperService:
             except Exception as e:
                 logger.error("%s scraper failed: %s", source, e)
 
+        total_fetched = len(all_jobs)
         if not all_jobs:
             return {"fetched": 0, "upserted": 0}
+
+        # Filter by location if provided — job boards sometimes leak off-location results
+        if location:
+            location_lower = location.lower()
+            all_jobs = [
+                job for job in all_jobs
+                if job.location is None or location_lower in job.location.lower()
+            ]
+            logger.info(
+                "Location filter '%s': %d → %d jobs", location, total_fetched, len(all_jobs)
+            )
+
+        if not all_jobs:
+            return {"fetched": total_fetched, "upserted": 0}
 
         # Deduplicate by source_url within this batch before inserting
         seen_urls: set[str] = set()
@@ -68,6 +83,7 @@ class ScraperService:
                 "scraped_at": now,
                 "raw_html": job.raw_html,
                 "is_active": True,
+                "applied": False,
                 "created_at": now,
                 "updated_at": now,
             }
@@ -75,5 +91,5 @@ class ScraperService:
         ]
 
         upserted = await self.job_repo.upsert_many(jobs_data)
-        logger.info("Upserted %d jobs into DB (total fetched: %d)", upserted, len(all_jobs))
-        return {"fetched": len(all_jobs), "unique": len(unique_jobs), "upserted": upserted}
+        logger.info("Upserted %d jobs into DB (total fetched: %d)", upserted, total_fetched)
+        return {"fetched": total_fetched, "location_filtered": len(all_jobs), "unique": len(unique_jobs), "upserted": upserted}

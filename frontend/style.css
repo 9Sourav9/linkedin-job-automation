@@ -307,6 +307,20 @@ input, textarea, select { font-family: inherit; font-size: 1rem; }
 }
 
 .btn-loading { opacity: 0.8; cursor: not-allowed; }
+
+.btn-applied {
+  background: var(--card);
+  color: #16a34a;
+  border: 1px solid #16a34a;
+}
+.btn-applied:hover { background: #dcfce7; }
+
+.btn-applied-active {
+  background: #dcfce7;
+  color: #16a34a;
+  border: 1px solid #16a34a;
+}
+.btn-applied-active:hover { background: #bbf7d0; }
 .spinner {
   width: 14px; height: 14px;
   border: 2px solid rgba(255,255,255,0.4);
@@ -453,7 +467,17 @@ textarea { resize: vertical; min-height: 100px; }
 }
 .job-meta-item i { width: 13px; height: 13px; }
 
-.job-card-actions { display: flex; gap: 8px; align-items: center; }
+.job-card-actions { display: flex; gap: 8px; align-items: center; justify-content: space-between; }
+
+.job-tailored-section { border-top: 1px solid var(--border); margin-top: 12px; padding-top: 10px; }
+
+.job-tailored-toggle {
+  background: none; border: none; cursor: pointer;
+  font-size: .8rem; color: var(--accent); font-weight: 500;
+  display: flex; align-items: center; gap: 5px; padding: 0;
+}
+.job-tailored-toggle:hover { text-decoration: underline; }
+.job-tailored-toggle i { width: 14px; height: 14px; }
 
 .job-desc-preview {
   font-size: 0.8125rem;
@@ -497,7 +521,7 @@ textarea { resize: vertical; min-height: 100px; }
 .resume-name { font-weight: 600; font-size: 0.9rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .resume-meta { font-size: 0.78rem; color: var(--text-light); margin-top: 2px; }
 
-.resume-actions { display: flex; gap: 6px; align-items: center; flex-shrink: 0; }
+.resume-actions { display: flex; gap: 6px; align-items: center; flex-shrink: 0; flex-wrap: wrap; }
 
 /* =============================================
    UPLOAD ZONE
@@ -752,8 +776,8 @@ tbody tr:hover td { background: #f8fafc; }
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-lg);
   width: 100%;
-  max-width: 680px;
-  max-height: 85vh;
+  max-width: 860px;
+  max-height: 90vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -867,6 +891,59 @@ tbody tr:hover td { background: #f8fafc; }
   gap: 8px;
 }
 .selection-info i { width: 14px; height: 14px; }
+
+/* =============================================
+   JOB SECTIONS
+   ============================================= */
+.jobs-section { margin-bottom: 8px; }
+
+.jobs-section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: #f1f5f9;
+  border-radius: var(--radius);
+  margin-bottom: 16px;
+  border-left: 4px solid var(--accent);
+}
+.jobs-section-header i { width: 18px; height: 18px; color: var(--accent); }
+.jobs-section-header h2 { font-size: 1rem; font-weight: 600; color: var(--text); margin: 0; }
+.jobs-section-header.applied { border-left-color: #16a34a; }
+.jobs-section-header.applied i { color: #16a34a; }
+
+.section-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 22px;
+  padding: 0 8px;
+  background: var(--accent);
+  color: #fff;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.section-count.applied { background: #16a34a; }
+
+/* =============================================
+   PAGINATION
+   ============================================= */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px 0 8px;
+}
+.page-info {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  min-width: 100px;
+  text-align: center;
+}
 
 /* =============================================
    SCROLLBAR

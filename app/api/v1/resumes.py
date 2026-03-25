@@ -21,8 +21,9 @@ async def upload_resume(
     label: str | None = Form(None),
     session: AsyncSession = Depends(get_session),
 ):
-    if not file.filename or not file.filename.lower().endswith(".pdf"):
-        raise HTTPException(status_code=400, detail="Only PDF files are accepted")
+    fname = (file.filename or "").lower()
+    if not fname.endswith(".docx"):
+        raise HTTPException(status_code=400, detail="Only DOCX files are accepted")
 
     file_bytes = await file.read()
     if len(file_bytes) > MAX_UPLOAD_BYTES:
@@ -54,6 +55,24 @@ async def get_resume(
     return resume
 
 
+@router.delete("/{resume_id}", status_code=204, summary="Delete a resume")
+async def delete_resume(
+    resume_id: uuid.UUID,
+    session: AsyncSession = Depends(get_session),
+):
+    repo = ResumeRepository(session)
+    resume = await repo.get_by_id(resume_id)
+    if not resume:
+        raise HTTPException(status_code=404, detail="Resume not found")
+    storage = StorageService()
+    try:
+        import os
+        os.remove(storage.base_path / resume.file_path)
+    except FileNotFoundError:
+        pass
+    await repo.delete(resume)
+
+
 @router.get("/{resume_id}/download", summary="Download original resume PDF")
 async def download_resume(
     resume_id: uuid.UUID,
@@ -70,8 +89,11 @@ async def download_resume(
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="File not found on disk")
 
+    is_docx = resume.filename.lower().endswith(".docx")
+    media_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document" if is_docx else "application/pdf"
+    disposition = "attachment" if is_docx else "inline"
     return Response(
         content=file_bytes,
-        media_type="application/pdf",
-        headers={"Content-Disposition": f'attachment; filename="{resume.filename}"'},
+        media_type=media_type,
+        headers={"Content-Disposition": f'{disposition}; filename="{resume.filename}"'},
     )
